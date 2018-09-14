@@ -1,4 +1,4 @@
-#!/binbash
+#!/bin/bash
 
 # A script to count the number of bass in a primer
 # it expects any number of fasta files as input
@@ -15,10 +15,10 @@
 # then count the characters (the wc -m)
 # but then also subtract one because wc -m counts newlines
 # another solution would be to use tr like so
-# head -2 primer_B.fasta | tail -1 | tr -d '| n' | wc -m
+# head -2 primer_B.fasta | tail -1 | tr -d '\n' | wc -m
 for file in "$@"
 do
-FILENAME=$(basename $file .fasta)
-COUNT=$(expr $(head -2 $file | tail -1 | wc -m) - 1)
-  echo In $FILENAME, there are $COUNT nucleotides.
+FILENAME=$(basename "$file" .fasta)
+COUNT=$(head -2 "$file" | tail -1 | tr -d '\n' | wc -m | tr -d " ")
+  echo In "$FILENAME", there are "$COUNT" nucleotides.
 done
